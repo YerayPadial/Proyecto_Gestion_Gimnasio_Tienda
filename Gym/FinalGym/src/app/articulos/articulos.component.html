@@ -1,0 +1,132 @@
+<!-- Botón para abrir el panel -->
+<button *ngIf="!mostrarCarrito && carrito.length > 0" [ngClass]="fadeOutClass" (click)="toggleCarrito()"
+  matBadge="{{ obtenerCantidadTotal() }}" matBadgePosition="after"
+  class="fixed top-4 right-4 z-50 bg-blue-100 text-white px-4 py-4 rounded-full shadow-lg text-2xl hover:bg-blue-300 transition">
+  🛒
+</button>
+
+
+<!-- Panel lateral -->
+<div class="fixed top-0 right-0 h-full bg-white shadow-lg transition-transform transform"
+  [class.translate-x-full]="!mostrarCarrito" style="width: 300px; z-index: 1000;">
+
+  <div class="p-4">
+    <h2 class="text-lg font-semibold">Carrito</h2>
+    <p class="text-sm text-gray-500">Total de artículos: {{ obtenerCantidadTotal() }}</p>
+    <ul>
+      <li *ngFor="let producto of carrito; let i = index" class="border-b py-2">
+        <div class="flex productos-center justify-between">
+
+          <span>{{ producto.producto.nombre }}</span>
+
+          <div class="flex items-center">
+            <button (click)="disminuirCantidad(i)" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">-</button>
+            <span class="mx-2">{{ producto.cantidad }}</span>
+            <button (click)="aumentarCantidad(i)" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">+</button>
+          </div>
+
+          <span>{{ (+producto.producto.precio * +producto.cantidad) | number:'1.2-2' }} €</span>
+
+          <button (click)="eliminarItem(i)" class="text-red-600 hover:text-red-800">
+            🗑️
+          </button>
+        </div>
+      </li>
+      <p class="text-black">Subtotal: {{ totalSinIVA | number:'1.2-2' }} €</p>
+      <p class="text-lg text-black font-bold">Total (IVA): {{ totalConIVA | number:'1.2-2' }} €</p>
+    </ul>
+
+    <ng-container *ngIf="carrito.length > 0; else noProducts">
+      <button (click)="comprar()"
+        class="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition w-full">
+        Comprar
+      </button>
+
+      <button (click)="cleanShoppingCart()"
+        class="mt-4 px-4 py-1 bg-red-800  text-white rounded hover:bg-red-700 transition w-full">
+        Vaciar carrito
+      </button>
+    </ng-container>
+
+    <button (click)="toggleCarrito()" class="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition">
+      Cerrar
+    </button>
+
+    <ng-template #noProducts>
+      <span class="mt-4 inline-block text-red-600 font-semibold">El carrito está vacío</span>
+    </ng-template>
+  </div>
+</div>
+
+<div class="container mx-auto px-4 py-8">
+
+  <div class="relative w-full">
+    <input type="text" [(ngModel)]="filtro" placeholder="Buscar artículos..."
+      class="w-full p-2 pr-10 border rounded shadow-sm" />
+
+    <button *ngIf="filtro" (click)="filtro=''"
+      class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black">
+      ✕
+    </button>
+  </div>
+
+  <!-- Botones de categorías -->
+  <div class="flex flex-wrap gap-2 mt-6 mb-6 justify-center">
+    <button *ngFor="let tipo of categoriasUnicas" (click)="seleccionarCategoria(tipo)"
+      class="px-4 py-2 rounded-full border" [ngClass]="{
+      'bg-black text-white': categoriaSeleccionada === tipo,
+      'bg-white text-black border-gray-300': categoriaSeleccionada !== tipo
+    }">
+      {{ tipo }}
+    </button>
+
+    <button *ngIf="categoriaSeleccionada" (click)="limpiarCategoria()"
+      class="px-4 py-2 rounded-full border bg-blue-500 text-white hover:bg-blue-700">
+      Todos
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div *ngFor="let producto of productosFiltrados"
+      class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+      <!--por cada producto del array de productos hago el card -->
+      <!--rutax -->
+      <img [src]="'https://ieslamarisma.net/proyectos/2025/yeraipadial/gymfinal/public/storage/' + producto.foto"
+        [alt]="producto.nombre" class="w-full aspect-[4/5] object-contain bg-gray-100 p-4" />
+
+      <div class="p-4 text-center">
+
+        <h2 class="font-semibold text-lg">{{ producto.nombre }}</h2>
+        <div class="mt-2 text-sm text-gray-500">
+          {{ producto.precio | currency:'EUR' }}
+        </div>
+
+        <div class="mt-1 text-sm" *ngIf="producto.existencias > 0 && producto.existencias < 5">
+          <span class="text-yellow-600 font-medium">¡Pocas existencias!</span>
+        </div>
+
+        <div class="mt-2 text-sm text-gray-500">
+
+          <ng-container *ngIf="producto.existencias > 0; else agotado">
+
+            <div class="mt-4">
+              <label for="cantidad-{{ producto.id }}" class="block text-sm font-medium text-gray-700">Cantidad:</label>
+              <input id="cantidad-{{ producto.id }}" type="number" min="1" [max]="producto.existencias"
+                [(ngModel)]="cantidadSeleccionada[producto.id]" (ngModelChange)="validarCantidad(producto)"
+                class="w-full mt-1 border rounded px-2 py-1 text-center" placeholder="1" />
+            </div>
+
+            <button (click)="agregarAlCarrito(producto, cantidadSeleccionada[producto.id] || 1)"
+              class="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition">
+              🛒 Añadir al carrito
+            </button>
+
+          </ng-container>
+
+          <ng-template #agotado>
+            <span class="mt-4 inline-block text-red-600 font-semibold">Producto agotado</span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>

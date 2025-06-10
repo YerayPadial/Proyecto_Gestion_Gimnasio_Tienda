@@ -1,0 +1,89 @@
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar (solo visible en md y superior) -->
+  <div [class.w-64]="!colapsado" [class.w-20]="colapsado"
+    class="bg-white shadow-lg transition-all duration-300 flex flex-col justify-between md:flex hidden">
+
+    <!-- Navegación -->
+    <div>
+      <button (click)="toggleSidebar()" class="self-start mt-4 p-7 focus:outline-none">
+        <span *ngIf="!colapsado" class="material-icons">keyboard_arrow_left</span>
+        <span *ngIf="colapsado" class="material-icons">keyboard_arrow_right</span>
+      </button>
+
+      <ul class="space-y-2 px-2">
+        <!-- Inicio -->
+        <li routerLink="/inicio" routerLinkActive="bg-indigo-500 text-white"
+          class="cursor-pointer p-4 flex items-center space-x-3 rounded-md transition duration-300"
+          [class.justify-center]="colapsado" [ngClass]="{ 'hover:bg-gray-200 text-gray-700': true }">
+          <span class="material-icons">home</span>
+          <span *ngIf="!colapsado">Inicio</span>
+        </li>
+
+        <!-- Ubícanos -->
+        <li routerLink="/ubicacion" routerLinkActive="bg-indigo-500 text-white"
+          class="cursor-pointer p-4 flex items-center space-x-3 rounded-md transition duration-300"
+          [class.justify-center]="colapsado" [ngClass]="{ 'hover:bg-gray-200 text-gray-700': true }">
+          <span class="material-icons">location_on</span>
+          <span *ngIf="!colapsado">Ubícanos</span>
+        </li>
+
+        <!-- Sobre Nosotros -->
+        <li routerLink="/nosotros" routerLinkActive="bg-indigo-500 text-white"
+          class="cursor-pointer p-4 flex items-center space-x-3 rounded-md transition duration-300"
+          [class.justify-center]="colapsado" [ngClass]="{ 'hover:bg-gray-200 text-gray-700': true }">
+          <span class="material-icons">info</span>
+          <span *ngIf="!colapsado">Sobre Nosotros</span>
+        </li>
+
+        <!-- Tienda -->
+        <li routerLink="/tienda" routerLinkActive="bg-indigo-500 text-white"
+          class="cursor-pointer p-4 flex items-center space-x-3 rounded-md transition duration-300"
+          [class.justify-center]="colapsado" [ngClass]="{ 'hover:bg-gray-200 text-gray-700': true }">
+          <span class="material-icons">store</span>
+          <span *ngIf="!colapsado">Tienda</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Cuenta -->
+    <div class="mb-4 px-2">
+      <li routerLink="/cuenta" routerLinkActive="bg-indigo-500 text-white"
+        class="cursor-pointer hover:bg-gray-200 p-6 flex items-center space-x-3 rounded-md transition duration-300"
+        [class.justify-center]="colapsado" [ngClass]="{ 'hover:bg-gray-200 text-gray-700': true }">
+        <span class="material-icons">account_circle</span>
+        <span *ngIf="!colapsado">Cuenta</span>
+      </li>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="flex-1 p-6 overflow-auto pb-20 md:pb-6">
+    <!-- cargo el hijo correspondiente a la ruta principal -->
+    <router-outlet></router-outlet>
+    <app-footer *ngIf="mostrarFooter"></app-footer>
+  </div>
+
+  <!-- Barra inferior móvil (solo visible en móviles) -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white shadow-t flex justify-around items-center h-16 md:hidden z-50">
+    <a routerLink="/inicio" routerLinkActive="text-indigo-500"
+      class="flex flex-col items-center flex-1 py-2">
+      <span class="material-icons">home</span>
+    </a>
+    <a routerLink="/ubicacion" routerLinkActive="text-indigo-500"
+      class="flex flex-col items-center flex-1 py-2">
+      <span class="material-icons">location_on</span>
+    </a>
+    <a routerLink="/nosotros" routerLinkActive="text-indigo-500"
+      class="flex flex-col items-center flex-1 py-2">
+      <span class="material-icons">info</span>
+    </a>
+    <a routerLink="/tienda" routerLinkActive="text-indigo-500"
+      class="flex flex-col items-center flex-1 py-2">
+      <span class="material-icons">store</span>
+    </a>
+    <a routerLink="/cuenta" routerLinkActive="text-indigo-500"
+      class="flex flex-col items-center flex-1 py-2">
+      <span class="material-icons">account_circle</span>
+    </a>
+  </nav>
+</div>

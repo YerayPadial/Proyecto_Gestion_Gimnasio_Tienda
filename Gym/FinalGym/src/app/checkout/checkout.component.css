@@ -1,0 +1,46 @@
+/* Mejora el fondo y el borde del stepper */
+.mat-horizontal-stepper-header {
+  background: #f3f4f6;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+/* Paso activo */
+.mat-step-header.mat-active {
+  background: #e3f2fd;
+  border-bottom: 2px solid #1976d2;
+  color: #1976d2;
+}
+
+/* Paso con error */
+.mat-step-header.mat-step-error-state {
+  color: #d32f2f !important;
+}
+.mat-step-header.mat-step-error-state .mat-step-icon {
+  background: #d32f2f !important;
+  color: #fff !important;
+}
+
+/* Icono del paso activo */
+.mat-step-icon.mat-active {
+  background: #1976d2 !important;
+  color: #fff !important;
+}
+
+/* Icono del paso completado */
+.mat-step-icon.mat-completed {
+  background: #43a047 !important;
+  color: #fff !important;
+}
+
+/* Mejorar los botones */
+button[mat-raised-button] {
+  min-width: 120px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Espaciado entre pasos */
+.mat-horizontal-stepper-header:not(:last-child) {
+  margin-right: 8px;
+}

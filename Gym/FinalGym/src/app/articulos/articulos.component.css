@@ -1,0 +1,15 @@
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* Estilo para el panel lateral */
+.translate-x-full {
+  transform: translateX(100%);
+}
+
+.transition-transform {
+  transition: transform 0.3s ease-in-out;
+}

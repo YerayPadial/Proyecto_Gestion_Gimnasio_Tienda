@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { PedidoService } from '../services/pedido.service';
 import { AfterViewInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-checkout',
@@ -140,8 +141,19 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     return this.checkoutForm.get('envio') as FormGroup;
   }
 
-  cancelarCheckout() {
-    this.router.navigate(['/tienda']);
+  async cancelarCheckout() {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Deseas cancelar el proceso de compra?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cancelar',
+      cancelButtonText: 'No, continuar'
+    });
+
+    if (result.isConfirmed) {
+      this.router.navigate(['/tienda']);
+    }
   }
 
   calcularTotal(): void {
@@ -159,7 +171,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
   async comprar() {
     if (this.carrito.length === 0) {
-      alert('Tu carrito está vacío');
+      Swal.fire('Tu carrito está vacío', '', 'warning');
       return;
     }
 
@@ -178,7 +190,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       if (productosSinStock.length > 0) {
         const nombres = productosSinStock.map(producto => producto.nombre || 'Desconocido'
         ).join(', ');
-        alert(`No hay suficientes existencias de los siguientes productos: ${nombres}`);
+        Swal.fire(
+          'Sin existencias',
+          `No hay suficientes existencias de los siguientes productos: ${nombres}`,
+          'error'
+        );
         this.router.navigate(['/tienda']);
         return;
       }
@@ -196,18 +212,27 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
       };
       await firstValueFrom(this.pedidoService.crearPedido(pedidoData));
 
-      alert('Compra realizada con éxito');
+      const email = formData.cliente.email;
+      await Swal.fire(
+        'Compra realizada con éxito',
+        `El recibo fue enviado a su email: ${email}.`,
+        'success'
+      );
       this.cartService.limpiarCarrito();
       this.carrito = [];
       this.router.navigate(['/tienda']);
 
     } catch (error) {
       console.error('Error al verificar o actualizar productos:', error);
-      alert('Hubo un error al realizar la compra. Intenta nuevamente.');
+      Swal.fire(
+        'Error',
+        'Hubo un error al realizar la compra. Intenta nuevamente.',
+        'error'
+      );
     }
   }
 
- ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this.renderPayPalButton();
   }
 

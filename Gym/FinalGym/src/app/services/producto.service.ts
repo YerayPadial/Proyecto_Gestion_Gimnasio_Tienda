@@ -10,7 +10,7 @@ const headers = new HttpHeaders({ 'X-API-KEY': 'FTPGRV3344a' });
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'https://ieslamarisma.net/proyectos/2025/yeraipadial/gymfinal/public/api/productos'; //rutax
+  private apiUrl = 'https://gymfinaly.eu/backend/public/api/productos'; //rutax
 
   //esta registrado en el providers del app.config.ts
   constructor(private http: HttpClient) { }
@@ -20,7 +20,7 @@ export class ProductoService {
   }
 
   actualizarProducto(id: number, producto: Producto) {
-    return this.http.put<Producto>(`https://ieslamarisma.net/proyectos/2025/yeraipadial/gymfinal/public/api/productos/${id}`, producto, { headers });//rutax
+    return this.http.put<Producto>(`https://gymfinaly.eu/backend/public/api/productos/${id}`, producto, { headers });//rutax
   }
 
   getProductoById(id: number): Observable<Producto> {

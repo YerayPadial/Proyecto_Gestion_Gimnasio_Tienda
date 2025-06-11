@@ -46,7 +46,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/proyectos/2025/yeraipadial/Gym/FinalGym/"
+              "baseHref": "/"
             },
             "development": {
               "optimization": false,

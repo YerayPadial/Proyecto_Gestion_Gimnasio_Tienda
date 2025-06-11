@@ -9,7 +9,7 @@ const headers = new HttpHeaders({ 'X-API-KEY': 'FTPGRV3344a' });
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://ieslamarisma.net/proyectos/2025/yeraipadial/gymfinal/public/api/verificar-usuario';
+  private apiUrl = 'https://gymfinaly.eu/backend/public/api/verificar-usuario';
   //rutax
 
   constructor(private http: HttpClient) { }
@@ -19,10 +19,10 @@ export class AuthService {
   }
 
   enviarCodigo(dni: string): Observable<any> {
-    return this.http.post('https://ieslamarisma.net/proyectos/2025/yeraipadial/gymfinal/public/api/enviar-codigo', { dni }, { headers });//rutax
+    return this.http.post('https://gymfinaly.eu/backend/public/api/enviar-codigo', { dni }, { headers });//rutax
   }
 
   verificarCodigo(dni: string, codigo: string): Observable<{ valid: boolean }> {
-    return this.http.post<{ valid: boolean }>('https://ieslamarisma.net/proyectos/2025/yeraipadial/gymfinal/public/api/verificar-codigo', { dni, codigo }, { headers });//rutax
+    return this.http.post<{ valid: boolean }>('https://gymfinaly.eu/backend/public/api/verificar-codigo', { dni, codigo }, { headers });//rutax
   }
 }

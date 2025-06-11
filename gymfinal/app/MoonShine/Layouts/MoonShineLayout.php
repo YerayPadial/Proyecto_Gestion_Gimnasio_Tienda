@@ -101,8 +101,9 @@ final class MoonShineLayout extends AppLayout
     {
         parent::colors($colorManager);
 
-        $colorManager->secondary('rgb(20,62,115)');
-        $colorManager->primary('rgb(20,62,115)');
+        //$colorManager->secondary('rgb(20,62,115)');
+        $colorManager->secondary('rgb(125, 168, 225)');
+        $colorManager->primary('rgb(37, 86, 148)');
     }
 
     protected function getFooterCopyright(): string

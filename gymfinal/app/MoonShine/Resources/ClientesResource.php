@@ -84,10 +84,10 @@ class ClientesResource extends ModelResource implements HasImportExportContract
                     Text::make('Email'),
                 ]),
                 Flex::make([
-                    Date::make('Fecha_inicio')
+                    Date::make('Fecha de inicio', 'Fecha_inicio')
                         ->format("d.m.Y")
                         ->default(now()->toDateTimeString()),
-                    Date::make('Fecha_caducidad')
+                    Date::make('Fecha de caducidad', 'Fecha_caducidad')
                         ->format("d.m.Y")
                         ->default(now()->addMonth()->toDateTimeString()),
                 ]),

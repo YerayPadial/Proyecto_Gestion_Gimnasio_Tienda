@@ -112,7 +112,7 @@ class IngresosMesTienda extends Page
                 color: #ffffff;
                 font-weight: bold;
             }
-            tr:nth-child(odd) {
+            tr {
                 background-color: #e5e7eb;
             }
             tr:hover {
@@ -196,7 +196,7 @@ class IngresosMesTienda extends Page
             <div class="card mb-6">
                 <div class="card-body">
                     <h2 class="text-xl text-black mb-4">Gráfico de ingresos por mes (' . now()->year . ')</h2>
-                    <canvas id="ingresosChart" height="100"></canvas>
+                    <canvas id="ingresosChart" height="100" style="background-color: #e5e7eb;"></canvas>
                 </div>
             </div>
             <script>

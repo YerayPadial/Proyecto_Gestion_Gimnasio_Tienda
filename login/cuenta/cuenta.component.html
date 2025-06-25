@@ -1,0 +1,64 @@
+<div class="container-Login" *ngIf="currentView === 'login'">
+    <div class="container">
+      <div class="brand-logo"></div>
+      <div class="brand-title">EJEMPLO</div>
+      <div [innerHTML]="alerta"></div>
+      <form (submit)="onLoginSubmit($event)">
+        <div class="inputs">
+          <label for="usuario">Usuario o email:</label>
+          <input type="text" id="usuario" name="usuario" placeholder="Usuario82" [(ngModel)]="loginData.usuario" required>
+  
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" name="password" placeholder="x x x x x x" [(ngModel)]="loginData.password" required>
+        </div>
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      <button (click)="switchView('forgot')">Olvidé mi contraseña</button>
+      <button (click)="switchView('register')">¿No tienes una cuenta? Regístrate</button>
+    </div>
+  </div>
+  
+  <div class="container-Registro" *ngIf="currentView === 'register'">
+    <div class="container-Reg">
+      <div class="brand-logo"></div>
+      <div class="brand-title">EJEMPLO</div>
+      <div [innerHTML]="alertaRegistro"></div>
+      <form (submit)="onRegisterSubmit($event)">
+        <div class="inputs">
+          <label for="usuarioNew">Usuario:</label>
+          <input type="text" id="usuarioNew" name="usuarioNew" placeholder="Usuario82" [(ngModel)]="registerData.usuario" required>
+  
+          <label for="correoNew">Correo:</label>
+          <input type="email" id="correoNew" name="correoNew" placeholder="example@gmail.com" [(ngModel)]="registerData.correo" required>
+  
+          <label for="passwordNew">Contraseña:</label>
+          <div class="password-container">
+            <input [type]="showPassword ? 'text' : 'password'" id="passwordNew" name="passwordNew" placeholder="x 0 x 0 x 0 ! X" [(ngModel)]="registerData.password" required>
+            <button type="button" id="togglePasswordNew" (click)="togglePasswordVisibility()"></button>
+          </div>
+  
+          <label for="contrasenaRepetida">Repita la contraseña:</label>
+          <input type="password" id="contrasenaRepetida" name="contrasenaRepetida" placeholder="x 0 x 0 x 0 ! X" [(ngModel)]="registerData.repeatPassword" required>
+        </div>
+        <button type="submit">Registrarse</button>
+      </form>
+      <button (click)="switchView('login')">Volver</button>
+    </div>
+  </div>
+  
+  <div class="container-CambiarPass" *ngIf="currentView === 'forgot'">
+    <div class="container-Pas">
+      <div class="brand-logo"></div>
+      <div class="brand-title">EJEMPLO</div>
+      <div [innerHTML]="alertaCambioPass"></div>
+      <form (submit)="onForgotPasswordSubmit($event)">
+        <div class="inputs">
+          <label for="correo">Escriba su correo electrónico:</label>
+          <input type="email" id="correo" name="correo" placeholder="Verificaremos su email" [(ngModel)]="forgotPasswordData.correo" required>
+        </div>
+        <button type="submit">Enviar contraseña</button>
+      </form>
+      <button (click)="switchView('login')">Volver</button>
+    </div>
+  </div>
+  

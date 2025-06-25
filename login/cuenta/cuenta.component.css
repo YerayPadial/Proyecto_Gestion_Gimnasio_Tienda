@@ -1,0 +1,142 @@
+/* Estructura general */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    caret-color: rgb(59, 59, 151);
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    place-items: center;
+    overflow: hidden;
+    background: #ecf0f3;
+}
+
+.container, .container-Reg, .container-Pas {
+    position: relative;
+    width: 450px;
+    border-radius: 20px;
+    padding: 40px;
+    background: #ecf0f3;
+    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;
+}
+
+.container-Reg { height: 790px; }
+.container { height: 650px; }
+.container-Pas { height: 550px; }
+
+.brand-logo {
+    height: 100px;
+    width: 100px;
+    background-color: '#ecf0f3';
+    background-size: cover;
+    background-position: center;
+    margin: auto;
+    border-radius: 50%;
+    box-shadow: 8px 8px 11px #cbced1, -8px -8px 11px white;
+}
+
+.brand-title {
+    margin-top: 10px;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: rgb(59, 59, 151);
+}
+
+.inputs {
+    text-align: left;
+    margin-top: 30px;
+}
+
+label, input, button {
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+    border: none;
+    outline: none;
+}
+
+input {
+    background: #ecf0f3;
+    padding: 10px 20px;
+    height: 50px;
+    font-size: 15px;
+    border-radius: 50px;
+    box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
+}
+
+button {
+    color: white;
+    margin-top: 20px;
+    background: rgb(59, 59, 151);
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 900;
+    box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+    transition: 0.5s;
+}
+
+button:hover {
+    box-shadow: none;
+    transform: scale(1.05);
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#togglePasswordNew {
+    margin-left: 10px;
+    width: 35px;
+    height: 35px;
+    background: url('https://img.icons8.com/?size=100&id=24453&format=png&color=000000') no-repeat center center;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#togglePasswordNew:hover {
+    transform: scale(1.05);
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .container, .container-Reg, .container-Pas {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+    .brand-logo {
+        height: 80px;
+        width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container, .container-Reg, .container-Pas {
+        width: 100%;
+        padding: 15px;
+    }
+    .brand-logo {
+        height: 60px;
+        width: 60px;
+    }
+}

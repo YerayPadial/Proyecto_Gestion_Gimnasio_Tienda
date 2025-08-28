@@ -46,7 +46,7 @@ export class CuentaComponent implements OnInit {
           this.redirigiendoWorker = true;
           setTimeout(() => {
             //pasar email facilidad - rutax
-            window.location.href = 'https://gymfinaly.eu/backend/public/admin/login';
+            window.location.href = 'https://padiyera.com/backend/public/admin/login';
           }, 1000);
 
           return;
@@ -57,7 +57,7 @@ export class CuentaComponent implements OnInit {
             this.authService.enviarCodigo(this.cliente.dni).subscribe();
             this.mensaje = '';
             if (this.cliente.foto && this.cliente.foto !== 'null' && this.cliente.foto !== 'undefined') {
-             this.cliente.foto = 'https://gymfinaly.eu/backend/public/storage/' + this.cliente.foto;//rutax
+             this.cliente.foto = 'https://padiyera.com/backend/public/storage/' + this.cliente.foto;//rutax
             } else {
               this.cliente.foto = null;
             }

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900">
+  <rect width="900" height="900" fill="#ecfeff"/>
+  <circle cx="450" cy="450" r="350" fill="#cffafe"/>
+  <rect x="270" y="210" width="360" height="500" rx="28" fill="#0f766e"/>
+  <rect x="315" y="265" width="270" height="390" rx="18" fill="#14b8a6"/>
+  <path d="M315 320h270M315 390h270M315 460h270M315 530h270M315 600h270" stroke="#99f6e4" stroke-width="16"/>
+  <text x="450" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="50" font-weight="800" fill="#ffffff">GYM</text>
+</svg>

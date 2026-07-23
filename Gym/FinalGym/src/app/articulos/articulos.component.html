@@ -1,54 +1,54 @@
 <!-- Botón para abrir el panel -->
 <button *ngIf="!mostrarCarrito && carrito.length > 0" [ngClass]="fadeOutClass" (click)="toggleCarrito()"
   matBadge="{{ obtenerCantidadTotal() }}" matBadgePosition="after"
-  class="fixed top-4 right-4 z-50 bg-blue-100 text-white px-4 py-4 rounded-full shadow-lg text-2xl hover:bg-blue-300 transition">
-  🛒
+  class="store-cart-fab">
+  Carrito
 </button>
 
 
 <!-- Panel lateral -->
-<div class="fixed top-0 right-0 h-full bg-white shadow-lg transition-transform transform"
-  [class.translate-x-full]="!mostrarCarrito" style="width: 300px; z-index: 1000;">
+<div class="cart-panel fixed top-0 right-0 h-full bg-white shadow-lg transition-transform transform"
+  [class.translate-x-full]="!mostrarCarrito">
 
   <div class="p-4">
-    <h2 class="text-lg font-semibold">Carrito</h2>
-    <p class="text-sm text-gray-500">Total de artículos: {{ obtenerCantidadTotal() }}</p>
+    <h2 class="cart-title">Carrito</h2>
+    <p class="cart-subtitle">Total de articulos: {{ obtenerCantidadTotal() }}</p>
     <ul>
-      <li *ngFor="let producto of carrito; let i = index" class="border-b py-2">
-        <div class="flex productos-center justify-between">
+      <li *ngFor="let producto of carrito; let i = index" class="cart-line">
+        <div class="cart-line-grid">
 
-          <span>{{ producto.producto.nombre }}</span>
+          <span class="cart-line-name">{{ producto.producto.nombre }}</span>
 
-          <div class="flex items-center">
-            <button (click)="disminuirCantidad(i)" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">-</button>
+          <div class="cart-qty">
+            <button (click)="disminuirCantidad(i)">-</button>
             <span class="mx-2">{{ producto.cantidad }}</span>
-            <button (click)="aumentarCantidad(i)" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">+</button>
+            <button (click)="aumentarCantidad(i)">+</button>
           </div>
 
-          <span>{{ (+producto.producto.precio * +producto.cantidad) | number:'1.2-2' }} €</span>
+          <span class="cart-price">{{ (+producto.producto.precio * +producto.cantidad) | number:'1.2-2' }} €</span>
 
-          <button (click)="eliminarItem(i)" class="text-red-600 hover:text-red-800">
-            🗑️
+          <button (click)="eliminarItem(i)" class="cart-remove">
+            Eliminar
           </button>
         </div>
       </li>
-      <p class="text-black">Subtotal: {{ totalSinIVA | number:'1.2-2' }} €</p>
-      <p class="text-lg text-black font-bold">Total (IVA): {{ totalConIVA | number:'1.2-2' }} €</p>
+      <p class="cart-total-line">Subtotal: {{ totalSinIVA | number:'1.2-2' }} €</p>
+      <p class="cart-total">Total IVA incluido: {{ totalConIVA | number:'1.2-2' }} €</p>
     </ul>
 
     <ng-container *ngIf="carrito.length > 0; else noProducts">
       <button (click)="comprar()"
-        class="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition w-full">
+        class="cart-primary">
         Comprar
       </button>
 
       <button (click)="cleanShoppingCart()"
-        class="mt-4 px-4 py-1 bg-red-800  text-white rounded hover:bg-red-700 transition w-full">
+        class="cart-danger">
         Vaciar carrito
       </button>
     </ng-container>
 
-    <button (click)="toggleCarrito()" class="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition">
+    <button (click)="toggleCarrito()" class="cart-secondary">
       Cerrar
     </button>
 
@@ -58,75 +58,87 @@
   </div>
 </div>
 
-<div class="container mx-auto px-4 py-8">
+<div class="store-page">
+  <section class="store-hero">
+    <div>
+      <p class="store-eyebrow">FinalGym shop</p>
+      <h1>Equipamiento para entrenar mejor</h1>
+      <p>Productos seleccionados para fuerza, recuperacion y sesiones diarias en el gimnasio.</p>
+    </div>
+    <div class="store-hero-stats">
+      <span>{{ productosFiltrados.length }}</span>
+      <small>productos disponibles</small>
+    </div>
+  </section>
 
-  <div class="relative w-full">
+  <div class="store-search">
     <input type="text" [(ngModel)]="filtro" placeholder="Buscar artículos..."
-      class="w-full p-2 pr-10 border rounded shadow-sm" />
+      class="store-search-input" />
 
     <button *ngIf="filtro" (click)="filtro=''"
-      class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black">
-      ✕
+      class="store-search-clear">
+      Limpiar
     </button>
   </div>
 
   <!-- Botones de categorías -->
-  <div class="flex flex-wrap gap-2 mt-6 mb-6 justify-center">
+  <div class="store-categories">
     <button *ngFor="let tipo of categoriasUnicas" (click)="seleccionarCategoria(tipo)"
-      class="px-4 py-2 rounded-full border" [ngClass]="{
-      'bg-black text-white': categoriaSeleccionada === tipo,
-      'bg-white text-black border-gray-300': categoriaSeleccionada !== tipo
-    }">
+      class="store-chip" [class.store-chip-active]="categoriaSeleccionada === tipo">
       {{ tipo }}
     </button>
 
     <button *ngIf="categoriaSeleccionada" (click)="limpiarCategoria()"
-      class="px-4 py-2 rounded-full border bg-blue-500 text-white hover:bg-blue-700">
+      class="store-chip store-chip-clear">
       Todos
     </button>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let producto of productosFiltrados"
-      class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+  <div class="store-grid">
+    <article *ngFor="let producto of productosFiltrados" class="product-card">
       <!--por cada producto del array de productos hago el card -->
       <!--rutax -->
-      <img [src]="'https://padiyera.ososportgym.es/finalgym-api/storage/' + producto.foto"
-        [alt]="producto.nombre" class="w-full max-w-[736px] max-h-[736px] mx-auto aspect-square object-contain bg-gray-100 p-4" />
+      <div class="product-media">
+        <img [src]="producto.foto ? 'https://padiyera.ososportgym.es/finalgym-api/storage/' + producto.foto : 'assets/images/logoGym.png'"
+          [alt]="producto.nombre" />
+      </div>
 
-      <div class="p-4 text-center">
+      <div class="product-body">
 
-        <h2 class="font-semibold text-lg">{{ producto.nombre }}</h2>
-        <div class="mt-2 text-sm text-gray-500">
+        <p class="product-category">{{ producto.categoria?.tipo }}</p>
+        <h2>{{ producto.nombre }}</h2>
+        <p class="product-description">{{ producto.descripcion }}</p>
+        <div class="product-price">
           {{ producto.precio | currency:'EUR' }}
         </div>
 
-        <div class="mt-1 text-sm" *ngIf="producto.existencias > 0 && producto.existencias < 5">
-          <span class="text-yellow-600 font-medium">¡Pocas existencias!</span>
+        <div class="stock-warning" *ngIf="producto.existencias > 0 && producto.existencias < 5">
+          <span>Pocas existencias</span>
         </div>
 
-        <div class="mt-2 text-sm text-gray-500">
+        <div class="product-actions">
 
           <ng-container *ngIf="producto.existencias > 0; else agotado">
 
-            <div class="mt-4">
-              <label for="cantidad-{{ producto.id }}" class="block text-sm font-medium text-gray-700">Cantidad:</label>
+            <div class="quantity-control">
+              <label for="cantidad-{{ producto.id }}">Cantidad</label>
               <input id="cantidad-{{ producto.id }}" type="number" min="1" [max]="producto.existencias"
                 [(ngModel)]="cantidadSeleccionada[producto.id]" (ngModelChange)="validarCantidad(producto)"
-                class="w-full mt-1 border rounded px-2 py-1 text-center" placeholder="1" />
+                placeholder="1" />
             </div>
 
             <button (click)="agregarAlCarrito(producto, cantidadSeleccionada[producto.id] || 1)"
-              class="mt-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition">
-              🛒 Añadir al carrito
+              class="add-button">
+              Añadir al carrito
             </button>
 
           </ng-container>
 
           <ng-template #agotado>
-            <span class="mt-4 inline-block text-red-600 font-semibold">Producto agotado</span>
+            <span class="sold-out">Producto agotado</span>
           </ng-template>
         </div>
       </div>
-    </div>
+    </article>
   </div>
+</div>

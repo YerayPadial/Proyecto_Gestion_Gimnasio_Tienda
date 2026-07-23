@@ -21,9 +21,6 @@ return new class extends Migration
             $table->date('fecha_caducidad');
             $table->unsignedBigInteger('tipo_cuota');
             $table->timestamps();
-
-
-            $table->foreign('tipo_cuota')->references('id')->on('cuotas')->onDelete('cascade');
         });
     }
 

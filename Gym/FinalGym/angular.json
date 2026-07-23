@@ -46,7 +46,12 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/gym/"
+              "optimization": {
+                "fonts": {
+                  "inline": false
+                }
+              },
+              "baseHref": "/finalgym/"
             },
             "development": {
               "optimization": false,

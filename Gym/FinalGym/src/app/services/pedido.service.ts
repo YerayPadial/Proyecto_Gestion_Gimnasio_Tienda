@@ -5,7 +5,7 @@ const headers = new HttpHeaders({ 'X-API-KEY': 'FTPGRV3344a' });
 
 @Injectable({ providedIn: 'root' })
 export class PedidoService {
-  private apiUrl = 'https://padiyera.com/backend/public/api/orders'; //rutax
+  private apiUrl = 'https://padiyera.ososportgym.es/finalgym-api/api/orders'; //rutax
 
   constructor(private http: HttpClient) { }
 
